@@ -1,14 +1,7 @@
 call plug#begin('~/.local/share/nvim/site/plugged')
 
-"terminal
-Plug 'skywind3000/vim-terminal-help'
-
-"fzf
-Plug 'junegunn/fzf', {'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-
-"markdown preview
-Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install' }
+"surround
+Plug 'tpope/vim-surround'
 
 "airline
 Plug 'vim-airline/vim-airline'
@@ -19,26 +12,45 @@ Plug 'myusuf3/numbers.vim'
 "nerdcommenter
 Plug 'preservim/nerdcommenter'
 
-"barbaric
-Plug 'rlue/vim-barbaric'
+"fcitx.vim
+Plug 'vim-scripts/fcitx.vim'
 
-"onedark
-Plug 'joshdick/onedark.vim'
+"wildfire
+Plug 'gcmt/wildfire.vim', { 'on': ['<Plug>(wildfire-fuel)', '<Plug>(wildfire-water'] }
 
 "coc
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile', 'branch': 'release' }
 
 "neovim plugin for ranger
-Plug 'kevinhwang91/rnvimr'
+Plug 'kevinhwang91/rnvimr', { 'on': 'RnvimrToggle' }
 
 "vim-go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 
-""ale
-"Plug 'dense-analysis/ale'
+"fzf
+Plug 'junegunn/fzf.vim', { 'on': 'Files' }
+
+"markdown preview
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'md' }
+
+"onedark
+"Plug 'joshdick/onedark.vim'
+
+"terminal
+"Plug 'skywind3000/vim-terminal-help'
+
+"barbaric
+"Plug 'rlue/vim-barbaric'
 
 call plug#end()
 
+"wildfire
+map <SPACE> <Plug>(wildfire-fuel)
+vmap <C-SPACE> <Plug>(wildfire-water)
+
+"NERDCommenter
+nmap [count]<leader>cc <Plug>(NERDCommenterComment)
+nmap [count]<leader>cu <Plug>(NERDCommenterUncomment)
 
 "vim-go
 let g:go_fmt_command = "goimports"
@@ -47,7 +59,7 @@ let g:go_textobj_include_function_doc = 1
 
 au FileType go nmap <silent> [g :cprevious<CR> 
 au FileType go nmap <silent> ]g :cnext<CR> 
-au FileType go nmap <leader>r :GoRun %<CR> 
+au FileType go nmap <leader>r :GoRun %<CR>
 au FileType go set autowrite
 au FileType go nmap <leader>b :GoBuild<CR> 
 au FileType go nmap <leader>n :GoRename 
@@ -76,6 +88,12 @@ nmap <leader>p <Plug>MarkdownPreview
 
 
 "custom
+nnoremap q :q<CR>
+nnoremap Q :q!<CR>
+nnoremap P "+p
+vnoremap P "+p
+nnoremap W :w<CR>
+
 xnoremap < <gv
 xnoremap > >gv
 
@@ -98,7 +116,7 @@ nnoremap <leader>q :noh<CR>
 "highlight CursorLine cterm=NONE ctermbg=59
 highlight CursorLine cterm=NONE ctermbg=000000 ctermfg=255
 
-colorscheme onedark
+"colorscheme onedark
 
 set nobackup
 set nowritebackup
