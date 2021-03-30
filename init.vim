@@ -1,10 +1,26 @@
 call plug#begin('~/.local/share/nvim/site/plugged')
 
+"leetcode
+Plug 'ianding1/leetcode.vim'
+
+"visual-multi
+Plug 'mg979/vim-visual-multi', { 'branch': 'master' }
+
 "surround
 Plug 'tpope/vim-surround'
 
+"lua-surround
+"Plug 'blackcauldron7/surround.nvim'
+
 "airline
-Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline'
+
+"galaxyline
+Plug 'glepnir/galaxyline.nvim', {'branch': 'main'}
+Plug 'kyazdani42/nvim-web-devicons'
+
+"smooth-scroll
+Plug 'cossonleo/neo-smooth-scroll.nvim'
 
 "numbers
 Plug 'myusuf3/numbers.vim'
@@ -12,29 +28,32 @@ Plug 'myusuf3/numbers.vim'
 "nerdcommenter
 Plug 'preservim/nerdcommenter'
 
-"fcitx.vim
-Plug 'vim-scripts/fcitx.vim'
-
 "wildfire
 Plug 'gcmt/wildfire.vim', { 'on': ['<Plug>(wildfire-fuel)', '<Plug>(wildfire-water'] }
 
 "coc
-Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile', 'branch': 'release' }
+"Plug 'neoclide/coc.nvim', { 'do': 'yarn install --frozen-lockfile', 'branch': 'release' }
 
 "neovim plugin for ranger
-Plug 'kevinhwang91/rnvimr', { 'on': 'RnvimrToggle' }
+Plug 'kevinhwang91/rnvimr'
 
 "vim-go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
+"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries', 'for': 'go' }
 
 "fzf
-Plug 'junegunn/fzf.vim', { 'on': 'Files' }
+Plug 'junegunn/fzf.vim'
+
+"lua-fzf
+"Plug 'vijaymarupudi/nvim-fzf'
 
 "markdown preview
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'md' }
 
 "onedark
-"Plug 'joshdick/onedark.vim'
+Plug 'joshdick/onedark.vim'
+
+"fcitx.vim
+"Plug 'vim-scripts/fcitx.vim'
 
 "terminal
 "Plug 'skywind3000/vim-terminal-help'
@@ -43,6 +62,13 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install', 'for': 'md
 "Plug 'rlue/vim-barbaric'
 
 call plug#end()
+
+"leetcode
+let g:leetcode_browser='firefox'
+let g:leetcode_china=1
+let g:leetcode_solution_filetype='python3'
+let g:leetcode_hide_paid_only=1
+
 
 "wildfire
 map <SPACE> <Plug>(wildfire-fuel)
@@ -88,10 +114,14 @@ nmap <leader>p <Plug>MarkdownPreview
 
 
 "custom
+"inoremap <S-Right> :CocCommand rime.disable<CR>
+
 nnoremap q :q<CR>
 nnoremap Q :q!<CR>
 nnoremap P "+p
 vnoremap P "+p
+nnoremap Y "+y
+vnoremap Y "+y
 nnoremap W :w<CR>
 
 xnoremap < <gv
@@ -116,7 +146,7 @@ nnoremap <leader>q :noh<CR>
 "highlight CursorLine cterm=NONE ctermbg=59
 highlight CursorLine cterm=NONE ctermbg=000000 ctermfg=255
 
-"colorscheme onedark
+colorscheme onedark
 
 set nobackup
 set nowritebackup
@@ -125,37 +155,40 @@ set shortmess+=c
 
 
 
-"coc
-"au InsertLeave * :call CocAction('format') "auto format
-nnoremap <leader>f :call CocAction('format')<CR>
+""coc
+""au InsertLeave * :call CocAction('format') "auto format
+"nnoremap <leader>f :call CocAction('format')<CR>
 
-nmap <leader>e :CocCommand explorer<CR>
+"nmap <leader>e :CocCommand explorer<CR>
 
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gr <Plug>(coc-references)
+"nmap <silent> gd <Plug>(coc-definition)
+"nmap <silent> gr <Plug>(coc-references)
 
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-function! s:show_documentation()
-	if (index(['vim','help'], &filetype) >= 0)
-		execute 'h '.expand('<cword>')
-	else
-		call CocAction('doHover')
-	endif
-endfunction
+"nnoremap <silent> K :call <SID>show_documentation()<CR>
+"function! s:show_documentation()
+	"if (index(['vim','help'], &filetype) >= 0)
+		"execute 'h '.expand('<cword>')
+	"else
+		"call CocAction('doHover')
+	"endif
+"endfunction
 
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"inoremap <silent><expr> <TAB>
+      "\ pumvisible() ? "\<C-n>" :
+      "\ <SID>check_back_space() ? "\<TAB>" :
+      "\ coc#refresh()
+"inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+"function! s:check_back_space() abort
+  "let col = col('.') - 1
+  "return !col || getline('.')[col - 1]  =~# '\s'
+"endfunction
 
-inoremap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <C-j> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"nmap <silent> [g <Plug>(coc-diagnostic-prev)
+"nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
+
+
+require('init.lua')
